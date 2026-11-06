@@ -1,0 +1,25 @@
+# take-a-look: production Compose project on the VPS.
+# Today it runs only Caddy (TLS + health page); the webhook service joins in issue 0002.
+# Guide: docs/guides/03-compose-and-caddy.md
+
+name: take-a-look
+
+services:
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    ports:
+      # The only published ports. SSH is the host's own sshd, not Docker.
+      - "80:80"         # ACME HTTP-01 challenge + redirect to HTTPS
+      - "443:443"       # HTTPS
+      - "443:443/udp"   # HTTP/3
+    environment:
+      DOMAIN: ${DOMAIN:?set DOMAIN in .env (see .env.example)}
+    volumes:
+      - ./caddy:/etc/caddy:ro  # whole directory, so a git pull is picked up on reload
+      - caddy_data:/data       # certificates and ACME account: keep across restarts
+      - caddy_config:/config
+
+volumes:
+  caddy_data:
+  caddy_config:

@@ -15,3 +15,7 @@ Blocked by: None (can start immediately)
 - [ ] Compose project with Caddy obtaining a certificate automatically for `look.g2labs.pl`
 - [ ] A health endpoint answers over HTTPS from outside the VPS
 - [ ] Only ports 80/443 (and SSH) exposed
+
+## Comments
+
+- Agent: walkthroughs in [docs/guides](../guides/README.md) (DNS, Docker + firewall, Compose + Caddy) and the Compose project (`compose.yaml`, `caddy/Caddyfile`, `.env.example`) are in place and smoke-tested locally (`DOMAIN=localhost`: `/health` 200 `ok`, other paths 404, HTTP→HTTPS 308, `caddy reload` works). Remaining: the owner runs guides 1–3 on OVH and the VPS and ticks the criteria.

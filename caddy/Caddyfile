@@ -1,0 +1,14 @@
+# Caddy obtains and renews the certificate for {$DOMAIN} automatically (Let's Encrypt / ZeroSSL).
+# Guide: docs/guides/03-compose-and-caddy.md
+
+{$DOMAIN} {
+	encode zstd gzip
+
+	handle /health {
+		respond "ok" 200
+	}
+
+	handle {
+		respond "Not found" 404
+	}
+}
