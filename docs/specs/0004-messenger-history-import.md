@@ -16,7 +16,7 @@ A one-off (re-runnable) import of the conversation from Meta's "Download your in
 2. As the owner, I want to copy the export to the VPS and start the import with one command, so that running it is simple.
 3. As the owner, I want a dry run that reports how many links, shared posts and photos it found, and the date range, without saving anything, so that I know what will happen before committing.
 4. As the owner, I want to pick which conversation to import when the export contains several, so that only our 1:1 chat is imported.
-5. As a Sender, I want each historical message that contains a link or a shared post to become a Drop attributed to whichever of us sent it, so that "od Ani" filters work on old Entries too.
+5. As a Sender, I want each historical message that contains a link or a shared post to become a Drop attributed to whichever of us sent it, so that "od Joanny" filters work on old Entries too.
 6. As a Sender, I want each imported Drop to keep its original sent time, so that "z zeszłego roku" searches and ordering are correct.
 7. As a Sender, I want the message text that accompanied a link imported with it, so that my old captions are searchable.
 8. As a Sender, I want plain chit-chat messages without links not imported, so that the Library isn't flooded with conversation.

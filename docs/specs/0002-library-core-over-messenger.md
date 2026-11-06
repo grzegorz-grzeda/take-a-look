@@ -63,10 +63,10 @@ A Messenger bot (a Facebook Page, see ADR-0001) that both Senders share things t
 ### Searching
 
 34. As a Sender, I want to start a message with `?` or `szukaj` to search, so that searches are never mistaken for Drops.
-35. As a Sender, I want to search in natural Polish ("przepis z cukinią", "ten odkurzacz od Ani"), so that I don't have to learn a query syntax.
+35. As a Sender, I want to search in natural Polish ("przepis z cukinią", "ten odkurzacz od Joanny"), so that I don't have to learn a query syntax.
 36. As a Sender, I want search to match Polish word forms (cukinia/cukinią/cukinii), so that I find things regardless of grammar.
 37. As a Sender, I want a Polish search to find English Entries too, so that the language of the original doesn't matter.
-38. As a Sender, I want search to understand Category, Sender and time hints ("przepisy od Ani z zeszłego miesiąca"), so that I can narrow results naturally.
+38. As a Sender, I want search to understand Category, Sender and time hints ("przepisy od Joanny z zeszłego miesiąca"), so that I can narrow results naturally.
 39. As a Sender, I want search to cover titles, Tags, my own Drop text and the Snapshot text, so that anything I remember about an Entry helps find it.
 40. As a Sender, I want results as a swipeable carousel of up to 10 cards with image, title, Category, Sender and date, so that I can recognise the right one at a glance.
 41. As a Sender, I want an "Otwórz" button on each result that opens the original link, so that I can go back to the source.
