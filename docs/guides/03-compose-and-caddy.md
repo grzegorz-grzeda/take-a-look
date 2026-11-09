@@ -7,8 +7,8 @@ Needs guides [1](01-dns-ovh.md) (DNS resolves) and [2](02-vps-docker-and-firewal
 ## What's in the repo
 
 - [`compose.yaml`](../../compose.yaml): Compose project `take-a-look` with one service, `caddy` (official `caddy:2` image). It publishes only 80, 443/tcp and 443/udp. Certificates live in the `caddy_data` volume so they survive restarts and upgrades.
-- [`caddy/Caddyfile`](../../caddy/Caddyfile): one site, `{$DOMAIN}`. `/health` returns `ok`; everything else is `404` for now. Issue 0002 adds the webhook route.
-- [`.env.example`](../../.env.example): settings, without values. Today only `DOMAIN`.
+- [`caddy/Caddyfile`](../../caddy/Caddyfile): one site, `{$DOMAIN}`. `/health` returns `ok`, `/webhook` goes to the prototype service ([guide 4](04-meta-app-and-webhook.md)), everything else is `404`.
+- [`.env.example`](../../.env.example): settings, without values. This guide needs only `DOMAIN`; the `webhook` service starts and exits with `Missing environment variable` until guide 4 fills in the `META_*` values, which doesn't affect Caddy or `/health`.
 
 Caddy handles HTTPS automatically: on first start it requests a certificate for `DOMAIN` from Let's Encrypt (falling back to ZeroSSL) via the HTTP-01 / TLS-ALPN challenge, redirects HTTP to HTTPS, and renews the certificate before it expires. No certbot, no cron.
 
@@ -70,7 +70,7 @@ echo | openssl s_client -connect look.g2labs.pl:443 -servername look.g2labs.pl 2
 
 Re-run the port check from [2.5](02-vps-docker-and-firewall.md#25-check-from-outside): 22, 80 and 443 open, nothing else.
 
-✅ Issue [0001](../issues/0001-vps-ready-behind-https.md) is done when all of the above pass.
+✅ Issue [0001](../issues/done-0001-vps-ready-behind-https.md) is done when all of the above pass.
 
 ## Day-to-day operations
 
@@ -80,7 +80,7 @@ All commands from `/opt/take-a-look`.
 |------|---------|
 | Status | `docker compose ps` |
 | Logs | `docker compose logs --tail 100 -f caddy` |
-| Update to latest `main` | `git pull && docker compose up -d` |
+| Update to latest `main` | `git pull && docker compose up -d --build`, plus the Caddyfile reload below if it changed |
 | Apply a Caddyfile change without downtime | `docker compose exec -w /etc/caddy caddy caddy reload` |
 | Check a Caddyfile change before applying | `docker compose exec -w /etc/caddy caddy caddy validate` |
 | Upgrade Caddy image | `docker compose pull && docker compose up -d` |

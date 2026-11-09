@@ -1,6 +1,5 @@
 # take-a-look: production Compose project on the VPS.
-# Today it runs only Caddy (TLS + health page); the webhook service joins in issue 0002.
-# Guide: docs/guides/03-compose-and-caddy.md
+# Guides: docs/guides/03-compose-and-caddy.md, docs/guides/04-meta-app-and-webhook.md
 
 name: take-a-look
 
@@ -20,6 +19,20 @@ services:
       - caddy_data:/data       # certificates and ACME account: keep across restarts
       - caddy_config:/config
 
+  # Throwaway prototype (spec 0001); replaced by the real service in issue 0004.
+  # No `ports:` on purpose: reachable only through Caddy on the internal network.
+  webhook:
+    build: ./prototype
+    restart: unless-stopped
+    environment:
+      META_APP_SECRET: ${META_APP_SECRET:-}
+      META_VERIFY_TOKEN: ${META_VERIFY_TOKEN:-}
+      META_PAGE_ACCESS_TOKEN: ${META_PAGE_ACCESS_TOKEN:-}
+      META_GRAPH_API_VERSION: ${META_GRAPH_API_VERSION:-}
+    volumes:
+      - webhook_data:/data     # payloads.jsonl: real, private data, never copied into the repo
+
 volumes:
   caddy_data:
   caddy_config:
+  webhook_data:

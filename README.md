@@ -6,14 +6,14 @@ The first Channel is a Messenger bot; Telegram may follow.
 
 ## Status
 
-Pre-release. Infrastructure first: the VPS serves a health page on `https://look.g2labs.pl` from a Docker Compose project with Caddy in front ([issue 0001](docs/issues/0001-vps-ready-behind-https.md)). The Messenger webhook prototype comes next.
+Pre-release. Infrastructure first: the VPS serves a health page on `https://look.g2labs.pl` from a Docker Compose project with Caddy in front ([issue 0001](docs/issues/done-0001-vps-ready-behind-https.md)). Now: the Messenger webhook prototype ([issue 0002](docs/issues/0002-meta-app-page-and-verified-webhook.md), [guide 4](docs/guides/04-meta-app-and-webhook.md)).
 
 ## Documentation
 
 | Where | What |
 |-------|------|
 | [GLOSSARY.md](GLOSSARY.md) | Domain language (Sender, Drop, Entry, Library, …) |
-| [docs/guides](docs/guides) | Step-by-step setup walkthroughs: DNS, VPS, Docker, Caddy |
+| [docs/guides](docs/guides) | Step-by-step setup walkthroughs: DNS, VPS, Docker, Caddy, Meta app and webhook |
 | [docs/adr](docs/adr) | Architecture decisions |
 | [docs/specs](docs/specs) | Specs |
 | [docs/issues](docs/issues) | Work breakdown, one file per issue |
@@ -22,7 +22,8 @@ Pre-release. Infrastructure first: the VPS serves a health page on `https://look
 
 ```
 compose.yaml       Compose project run on the VPS
-caddy/Caddyfile    HTTPS, health page, (later) proxy to the service
+caddy/Caddyfile    HTTPS, health page, /webhook proxy
+prototype/         Throwaway Messenger webhook (spec 0001), replaced in issue 0004
 .env.example       Settings with empty values; copy to .env (git-ignored)
 docs/              Guides, ADRs, specs, issues
 ```

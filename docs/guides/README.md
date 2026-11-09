@@ -4,11 +4,10 @@ Step-by-step walkthroughs for the setup steps only a human can do. Follow them i
 
 | # | Guide | Result | Issue |
 |---|-------|--------|-------|
-| 1 | [DNS record for `look.g2labs.pl`](01-dns-ovh.md) | `look.g2labs.pl` resolves to the VPS; `g2labs.pl` still on Netlify | [0001](../issues/0001-vps-ready-behind-https.md) |
-| 2 | [VPS: Docker, Compose and firewall](02-vps-docker-and-firewall.md) | Docker running; only SSH, 80 and 443 reachable | [0001](../issues/0001-vps-ready-behind-https.md) |
-| 3 | [Compose project and Caddy](03-compose-and-caddy.md) | `https://look.g2labs.pl/health` answers `ok` over a valid certificate | [0001](../issues/0001-vps-ready-behind-https.md) |
-
-Meta app, Page and webhook setup (issue [0002](../issues/0002-meta-app-page-and-verified-webhook.md)) will follow as guide 4.
+| 1 | [DNS record for `look.g2labs.pl`](01-dns-ovh.md) | `look.g2labs.pl` resolves to the VPS; `g2labs.pl` still on Netlify | [0001](../issues/done-0001-vps-ready-behind-https.md) |
+| 2 | [VPS: Docker, Compose and firewall](02-vps-docker-and-firewall.md) | Docker running; only SSH, 80 and 443 reachable | [0001](../issues/done-0001-vps-ready-behind-https.md) |
+| 3 | [Compose project and Caddy](03-compose-and-caddy.md) | `https://look.g2labs.pl/health` answers `ok` over a valid certificate | [0001](../issues/done-0001-vps-ready-behind-https.md) |
+| 4 | [Meta app, Page and webhook](04-meta-app-and-webhook.md) | Messages to the Zerknij Page are logged on the VPS and acknowledged | [0002](../issues/0002-meta-app-page-and-verified-webhook.md) |
 
 ## Placeholders
 
@@ -26,7 +25,8 @@ The repo is public, so the guides never contain real IP addresses, accounts or I
 ```
 take-a-look/              # repo, cloned to /opt/take-a-look on the VPS
 ├── compose.yaml          # Compose project "take-a-look"
-├── caddy/Caddyfile       # TLS, health page, (later) reverse proxy to the app
+├── caddy/Caddyfile       # TLS, health page, /webhook proxy
+├── prototype/            # throwaway webhook service (spec 0001)
 ├── .env.example          # documented settings, no values
 └── .env                  # real settings, VPS only, git-ignored
 ```
@@ -34,5 +34,6 @@ take-a-look/              # repo, cloned to /opt/take-a-look on the VPS
 ```
 Internet ──80/443──▶ Caddy (container) ──▶ /health → "ok"
                          │
-                         └──(issue 0002)──▶ app:8000  (internal network only)
+                         └──▶ /webhook → webhook:8000  (internal network only)
+                                            └──▶ /data/payloads.jsonl (volume)
 ```

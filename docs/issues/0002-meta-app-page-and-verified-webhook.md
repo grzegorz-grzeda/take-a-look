@@ -17,3 +17,7 @@ A Meta developer app with the Messenger product, linked to a new Facebook Page (
 - [ ] The owner receives the Polish acknowledgement reply
 - [ ] Secrets come from environment variables; none committed
 - [ ] Graph API version in use is noted
+
+## Comments
+
+- Agent (2026-11-09): prototype service (`prototype/`), Compose/Caddy wiring and [guide 4](../guides/04-meta-app-and-webhook.md) are in place and smoke-tested locally (handshake, 403 on bad/missing signature, payload logged, Send API reached). Graph API version in use: **v26.0**. Remaining: the owner runs guide 4 and ticks the criteria.
