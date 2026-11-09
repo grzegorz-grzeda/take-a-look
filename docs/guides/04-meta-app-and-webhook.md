@@ -13,8 +13,8 @@ Needs guide [3](03-compose-and-caddy.md) (`/health` answers over HTTPS). Issue: 
   - `POST /webhook`: rejects anything without a valid `X-Hub-Signature-256` (HMAC-SHA256 of the body with the app secret), appends `{"received_at": ..., "raw": <body exactly as received>}` as one line to `/data/payloads.jsonl`, answers `200` immediately, then replies to each message via the Send API.
   - `probe …` text commands (guide [6](06-capture-and-probes.md)) try the persistent menu, quick replies, a carousel and sending a video back.
 - [`prototype/summarize.py`](../../prototype/summarize.py): prints the shape of every logged payload without its private content.
-- [`compose.yaml`](../../compose.yaml): service `webhook`, no published ports (only Caddy can reach it), payload log on the `webhook_data` volume.
-- [`caddy/Caddyfile`](../../caddy/Caddyfile): `/webhook` is proxied to `webhook:8000`.
+- [`compose.yaml`](../../compose.yaml): service `webhook`, no published ports (only edge's Caddy can reach it, over the `edge` network), payload log on the `webhook_data` volume.
+- edge's [`caddy/Caddyfile`](https://github.com/grzegorz-grzeda/edge/blob/main/caddy/Caddyfile): `/webhook` is proxied to `webhook:8000` ([guide 3](03-compose-and-caddy.md)).
 - [`.env.example`](../../.env.example): the four `META_*` settings.
 
 ## 4.1 Meta developer account
@@ -66,7 +66,6 @@ Keep the verify token at hand for 4.6. Then deploy:
 cd /opt/take-a-look
 git pull
 docker compose up -d --build
-docker compose exec -w /etc/caddy caddy caddy reload
 docker compose logs webhook
 ```
 
@@ -78,7 +77,7 @@ Check routing from your laptop (a wrong token must be refused):
 curl -s -o /dev/null -w '%{http_code}\n' 'https://look.g2labs.pl/webhook?hub.mode=subscribe&hub.verify_token=wrong&hub.challenge=1'
 ```
 
-Expect `403`. A `404` or `502` means Caddy wasn't reloaded or the `webhook` container isn't running (`docker compose ps`).
+Expect `403`. A `502` means the `webhook` container isn't running (`docker compose ps`) or isn't on the `edge` network; a `404` means edge's Caddyfile lacks the `/webhook` route (pull and reload in `/opt/edge`).
 
 ## 4.5 Add the Messenger permission
 
@@ -157,7 +156,7 @@ Both must print `403`.
 
 | Symptom | Likely cause | Fix |
 |---------|--------------|-----|
-| Dashboard: "The callback URL or verify token couldn't be validated" | Token mismatch, container down, or Caddy not reloaded | Compare `.env` with what you typed (no spaces/quotes); `docker compose ps`; redo the `curl` check in 4.4 |
+| Dashboard: "The callback URL or verify token couldn't be validated" | Token mismatch, container down, or not on the `edge` network | Compare `.env` with what you typed (no spaces/quotes); `docker compose ps`; redo the `curl` check in 4.4 |
 | Logs show `webhook verification refused` | Verify token differs | Fix `.env`, `docker compose up -d webhook`, verify again |
 | Webhook verified, but sending a message logs nothing | Page not subscribed to `messages` (4.8), or the sender has no role on the app | Redo 4.8; message from the account that created the app |
 | Logs show `rejected POST with bad or missing signature` for real messages | Wrong app secret | Copy the secret again (4.4), `docker compose up -d webhook` |

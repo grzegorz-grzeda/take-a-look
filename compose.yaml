@@ -1,26 +1,13 @@
 # take-a-look: production Compose project on the VPS.
 # Guides: docs/guides/03-compose-and-caddy.md, docs/guides/04-meta-app-and-webhook.md
+# HTTPS and routing live in the separate edge project (github.com/grzegorz-grzeda/edge):
+# its Caddy reaches `webhook` over the shared external network `edge`.
 
 name: take-a-look
 
 services:
-  caddy:
-    image: caddy:2
-    restart: unless-stopped
-    ports:
-      # The only published ports. SSH is the host's own sshd, not Docker.
-      - "80:80"         # ACME HTTP-01 challenge + redirect to HTTPS
-      - "443:443"       # HTTPS
-      - "443:443/udp"   # HTTP/3
-    environment:
-      DOMAIN: ${DOMAIN:?set DOMAIN in .env (see .env.example)}
-    volumes:
-      - ./caddy:/etc/caddy:ro  # whole directory, so a git pull is picked up on reload
-      - caddy_data:/data       # certificates and ACME account: keep across restarts
-      - caddy_config:/config
-
   # Throwaway prototype (spec 0001); replaced by the real service in issue 0004.
-  # No `ports:` on purpose: reachable only through Caddy on the internal network.
+  # No `ports:` on purpose: reachable only through edge's Caddy on the `edge` network.
   webhook:
     build: ./prototype
     restart: unless-stopped
@@ -32,8 +19,12 @@ services:
       META_GRAPH_API_VERSION: ${META_GRAPH_API_VERSION:-}
     volumes:
       - webhook_data:/data     # payloads.jsonl: real, private data, never copied into the repo
+    networks:
+      - edge
 
 volumes:
-  caddy_data:
-  caddy_config:
   webhook_data:
+
+networks:
+  edge:
+    external: true  # created by the edge project; start it first

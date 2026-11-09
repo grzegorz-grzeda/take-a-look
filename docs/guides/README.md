@@ -27,15 +27,14 @@ The repo is public, so the guides never contain real IP addresses, accounts or I
 ```
 take-a-look/              # repo, cloned to /opt/take-a-look on the VPS
 ├── compose.yaml          # Compose project "take-a-look"
-├── caddy/Caddyfile       # TLS, health page, /webhook proxy
 ├── prototype/            # throwaway webhook service (spec 0001)
 ├── .env.example          # documented settings, no values
 └── .env                  # real settings, VPS only, git-ignored
 ```
 
 ```
-Internet ──80/443──▶ Caddy (container) ──▶ /health → "ok"
+Internet ──80/443──▶ Caddy (edge project, /opt/edge) ──▶ /health → "ok"
                          │
-                         └──▶ /webhook → webhook:8000  (internal network only)
+                         └──▶ /webhook → webhook:8000  (Docker network `edge` only)
                                             └──▶ /data/payloads.jsonl (volume)
 ```

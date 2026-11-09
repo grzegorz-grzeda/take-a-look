@@ -90,8 +90,8 @@ sudo ufw status verbose
 
 Ports published by Docker (`ports:` in `compose.yaml`) are opened by Docker's own iptables rules **before** ufw sees the traffic. A `ufw deny` does not block them. So the rule in this repo is:
 
-- Only Caddy publishes ports, and only `80/tcp`, `443/tcp` and `443/udp`.
-- Every other service (the app, later) uses the internal Compose network, never `ports:`. If one needs to be reached from the VPS itself for debugging, bind to localhost: `"127.0.0.1:8000:8000"`.
+- Only Caddy (in the separate [edge](https://github.com/grzegorz-grzeda/edge) project) publishes ports, and only `80/tcp`, `443/tcp` and `443/udp`.
+- Every app service joins the Docker network `edge` and never uses `ports:`. If one needs to be reached from the VPS itself for debugging, bind to localhost: `"127.0.0.1:8000:8000"`.
 
 If your VPS provider also offers a network/edge firewall in its panel, you can mirror the same three ports there as a second layer.
 
