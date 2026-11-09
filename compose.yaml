@@ -25,6 +25,7 @@ services:
     build: ./prototype
     restart: unless-stopped
     environment:
+      DOMAIN: ${DOMAIN}
       META_APP_SECRET: ${META_APP_SECRET:-}
       META_VERIFY_TOKEN: ${META_VERIFY_TOKEN:-}
       META_PAGE_ACCESS_TOKEN: ${META_PAGE_ACCESS_TOKEN:-}

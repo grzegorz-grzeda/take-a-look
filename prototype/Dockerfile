@@ -5,7 +5,7 @@ RUN useradd --system --uid 10001 webhook \
  && mkdir /data && chown webhook /data
 USER webhook
 WORKDIR /app
-COPY webhook.py .
+COPY webhook.py summarize.py ./
 
 ENV PYTHONUNBUFFERED=1
 EXPOSE 8000

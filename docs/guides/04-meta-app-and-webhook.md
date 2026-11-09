@@ -11,6 +11,8 @@ Needs guide [3](03-compose-and-caddy.md) (`/health` answers over HTTPS). Issue: 
 - [`prototype/webhook.py`](../../prototype/webhook.py): throwaway service (standard-library Python), replaced in issue 0004.
   - `GET /webhook`: Meta's verification handshake (`hub.mode`, `hub.verify_token`, `hub.challenge`).
   - `POST /webhook`: rejects anything without a valid `X-Hub-Signature-256` (HMAC-SHA256 of the body with the app secret), appends `{"received_at": ..., "raw": <body exactly as received>}` as one line to `/data/payloads.jsonl`, answers `200` immediately, then replies to each message via the Send API.
+  - `probe …` text commands (guide [6](06-capture-and-probes.md)) try the persistent menu, quick replies, a carousel and sending a video back.
+- [`prototype/summarize.py`](../../prototype/summarize.py): prints the shape of every logged payload without its private content.
 - [`compose.yaml`](../../compose.yaml): service `webhook`, no published ports (only Caddy can reach it), payload log on the `webhook_data` volume.
 - [`caddy/Caddyfile`](../../caddy/Caddyfile): `/webhook` is proxied to `webhook:8000`.
 - [`.env.example`](../../.env.example): the four `META_*` settings.

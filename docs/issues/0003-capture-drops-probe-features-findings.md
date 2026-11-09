@@ -17,3 +17,7 @@ Both Senders use the prototype for real: the wife is invited as an app Tester, t
 - [ ] Both Senders' Messenger IDs recorded for the allowlist (kept out of the repo)
 - [ ] Payload fixtures for the 0002 test harness committed only after full anonymisation: every ID, name, URL, timestamp and text replaced with invented values (Senders "Grzegorz" and "Joanna"); raw logs stay on the VPS and are never committed
 - [ ] Spec 0002 updated if findings change any of its decisions
+
+## Comments
+
+- Agent (2026-11-09): delivered the tooling: `probe …` commands in `prototype/webhook.py` (persistent menu, quick replies, generic-template carousel, video upload back), `prototype/summarize.py` (payload shapes without private content), [guide 5](../guides/05-tester-invite.md) (Tester invite, Joanna's part in Polish) and [guide 6](../guides/06-capture-and-probes.md) (Drop checklist, probes, hand-over). Exercised locally against a fake Graph API. Remaining: Senders capture Drops and run probes (guides 5–6), then the agent writes the Answer, synthetic fixtures and any spec 0002 updates.
