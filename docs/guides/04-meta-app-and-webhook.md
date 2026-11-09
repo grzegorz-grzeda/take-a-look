@@ -2,7 +2,7 @@
 
 Goal: a Facebook Page (working name **Zerknij**) backed by a Meta app in Development mode. Meta delivers every message sent to the Page to `https://look.g2labs.pl/webhook`. The prototype service checks the signature, appends the payload to a log on the VPS and replies with a short Polish acknowledgement.
 
-Needs guide [3](03-compose-and-caddy.md) (`/health` answers over HTTPS). Issue: [0002](../issues/0002-meta-app-page-and-verified-webhook.md).
+Needs guide [3](03-compose-and-caddy.md) (`/health` answers over HTTPS). Issue: [0002](../issues/done-0002-meta-app-page-and-verified-webhook.md).
 
 > Meta changes its dashboard often. If a label below doesn't match, look for the nearest equivalent; the order of steps is what matters. Written against Graph API **v26.0** (Nov 2026).
 
@@ -137,7 +137,7 @@ Both must print `403`.
 
 ## 4.10 Record the Graph API version
 
-[Issue 0002](../issues/0002-meta-app-page-and-verified-webhook.md) records Graph API `v26.0` under Comments (released 29 Jul 2026; Meta supports each version for about two years, see the [version list](https://developers.facebook.com/docs/graph-api/changelog/versions) for its expiry date). If you set a different `META_GRAPH_API_VERSION`, update that comment.
+[Issue 0002](../issues/done-0002-meta-app-page-and-verified-webhook.md) records Graph API `v26.0` under Comments (released 29 Jul 2026; Meta supports each version for about two years, see the [version list](https://developers.facebook.com/docs/graph-api/changelog/versions) for its expiry date). If you set a different `META_GRAPH_API_VERSION`, update that comment.
 
 ✅ Issue 0002 is done when 4.6 verifies, 4.9 gets a reply, the message is in the log and both forged requests return `403`.
 

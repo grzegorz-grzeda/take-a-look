@@ -6,7 +6,7 @@ The first Channel is a Messenger bot; Telegram may follow.
 
 ## Status
 
-Pre-release. Infrastructure first: the VPS serves a health page on `https://look.g2labs.pl` from a Docker Compose project with Caddy in front ([issue 0001](docs/issues/done-0001-vps-ready-behind-https.md)). Now: the Messenger webhook prototype ([issue 0002](docs/issues/0002-meta-app-page-and-verified-webhook.md), [guide 4](docs/guides/04-meta-app-and-webhook.md)).
+Pre-release. Infrastructure first: the VPS serves a health page on `https://look.g2labs.pl` from a Docker Compose project with Caddy in front ([issue 0001](docs/issues/done-0001-vps-ready-behind-https.md)). The Messenger webhook prototype runs on the VPS ([issue 0002](docs/issues/done-0002-meta-app-page-and-verified-webhook.md), [guide 4](docs/guides/04-meta-app-and-webhook.md)). Now: capturing real Drops ([issue 0003](docs/issues/0003-capture-drops-probe-features-findings.md)).
 
 ## Documentation
 

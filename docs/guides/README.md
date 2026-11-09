@@ -7,7 +7,7 @@ Step-by-step walkthroughs for the setup steps only a human can do. Follow them i
 | 1 | [DNS record for `look.g2labs.pl`](01-dns-ovh.md) | `look.g2labs.pl` resolves to the VPS; `g2labs.pl` still on Netlify | [0001](../issues/done-0001-vps-ready-behind-https.md) |
 | 2 | [VPS: Docker, Compose and firewall](02-vps-docker-and-firewall.md) | Docker running; only SSH, 80 and 443 reachable | [0001](../issues/done-0001-vps-ready-behind-https.md) |
 | 3 | [Compose project and Caddy](03-compose-and-caddy.md) | `https://look.g2labs.pl/health` answers `ok` over a valid certificate | [0001](../issues/done-0001-vps-ready-behind-https.md) |
-| 4 | [Meta app, Page and webhook](04-meta-app-and-webhook.md) | Messages to the Zerknij Page are logged on the VPS and acknowledged | [0002](../issues/0002-meta-app-page-and-verified-webhook.md) |
+| 4 | [Meta app, Page and webhook](04-meta-app-and-webhook.md) | Messages to the Zerknij Page are logged on the VPS and acknowledged | [0002](../issues/done-0002-meta-app-page-and-verified-webhook.md) |
 
 ## Placeholders
 
